@@ -19,8 +19,12 @@
 }
 else
 {
+    @*<ul class="nav navbar-nav navbar-right">
+            <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+            <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+        </ul>*@
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+        <li title="Register" class="nav-item"><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus"></i> Register</a></li>
+        <li title="Log In" class="nav-item"><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt"></i> Log in</a></li>
     </ul>
 }

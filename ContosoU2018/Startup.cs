@@ -33,6 +33,12 @@ namespace ContosoU2018
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            //mwilliams:  Add School Data Services (Register via Dependency Injection)
+            services.AddDbContext<SchoolContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //end mwilliams
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 

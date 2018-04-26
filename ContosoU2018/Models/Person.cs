@@ -8,6 +8,17 @@ namespace ContosoU2018.Models
     public abstract class Person
     {
         //Person properties - characteristics 
+
+        /*
+         *  These properties will become database fields within the Person table
+         *  by using the Entity Framework Core 
+         *  The ID Property will become the Primary Key Column of the database table that correspondes
+         *  to this class (Person).  
+         *  By default the EF interprets a property that's named ID or ClassNameID as the PK
+         *  for example:  
+         *      - ID
+         *      - PersonID
+         */
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

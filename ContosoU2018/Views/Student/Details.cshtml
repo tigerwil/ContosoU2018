@@ -1,0 +1,106 @@
+﻿@model ContosoU2018.Models.Student
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+<div class="container my-4">
+    <h2>Student Details: @Model.FullName</h2>
+
+    <div>
+        <hr />
+        <div class="row">
+            <div class="col-md-4 my-2">
+                @*<img class="img-fluid" src="http://placehold.it/200x200" alt="Student" />*@
+                <img class="img-fluid" src="~/images/students/@(Model.ID).jpg" alt="@Model.FullName" />
+            </div>
+            <div class="col-md-8">
+                <dl class="row border">
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.EnrollmentDate)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.EnrollmentDate)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.FirstName)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.LastName)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Address)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Address)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.City)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.City)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.PostalCode)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.PostalCode)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Province)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Province)
+                    </dd>
+                </dl>
+            </div>
+        </div>        
+    </div>
+
+    @* Enrollment data *@
+    <div class="my-3">
+        <h4>Student Courses</h4>
+        @if (Model.Enrollments.Count != 0)//Make sure we have enrollments for this student
+        {
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Course Title</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @* Loop once for each student enrollment *@
+                    @foreach(var item in Model.Enrollments)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(e => item.Course.Title)</td>
+                            <td>@Html.DisplayFor(e=>item.Grade)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else { 
+            //No enrollments - show alert
+            <div class="alert alert-warning" role="alert">
+                This student is not enrolled in any courses yet!
+            </div>
+        }
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

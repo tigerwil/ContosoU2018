@@ -61,6 +61,9 @@ namespace ContosoU2018
 
             app.UseStaticFiles();
 
+            //mwilliams: customer error pages
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
             app.UseAuthentication();
 
             app.UseMvc(routes =>

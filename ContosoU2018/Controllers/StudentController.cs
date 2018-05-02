@@ -166,11 +166,25 @@ namespace ContosoU2018.Controllers
         public async Task<IActionResult> Stats()
         {
             //Populate the EnrollmentDateGroup ViewModel with 
-            //student statistics
-            //IQueryable<EnrollmentDateGroup> data = 
+            //student statistics using LINQ (Language Integrated Query)
+            IQueryable<EnrollmentDateGroup> data =
+                from student in _context.Students //SQL FROM Clause:  FROM Students
+                group student by student.EnrollmentDate into dateGroup //GROUP BY EnrollmentDate
+                select new EnrollmentDateGroup //SELECT EnrollmentDate, COUNT(*) AS StudentCount
+                {
+                    EnrollmentDate = dateGroup.Key,
+                    StudentCount = dateGroup.Count()
+                };
+
+            /*
+             * SELECT EnrollmentDate, COUNT(*) AS StudentCount
+             * FROM Students
+             * Group by EnrollmentDateGroup
+             * 
+             */
 
 
-            return View();
+            return View(await data.ToListAsync());
         }
 
 

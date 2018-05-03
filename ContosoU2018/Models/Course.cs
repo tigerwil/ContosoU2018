@@ -25,9 +25,29 @@ namespace ContosoU2018.Models
         [Range(0,5)]//possible values are:  0,1,2,3,4,5
         public int Credits { get; set; }
 
+        [Required]
+        [Display(Name ="Department")]
+        public int DepartmentID { get; set; }//FK: 1 department : many courses
+
         //Navigation properties
-        //1: course: many enrollments
+        //1 course: many enrollments
         public virtual ICollection<Enrollment> Enrollments { get; set; }
 
-    }
-}
+        //1 course: many instructors
+        public virtual  ICollection<CourseAssignment> Assignments { get; set; }
+
+        //A course can only have at most one department, so the department property holds
+        //a single Department Entity (which may  by null if no department is assigned
+        //for a course)
+        public  virtual Department Department { get; set; }
+
+        //Calculated (read only) returning CourseID and Course Title
+        public string CourseIdTitle {
+            get {
+                return CourseID + ": " + Title;
+                //1: Chemistry
+                //2: Math
+            }
+        }//End of CourseIdTitle property
+    }//End of Class
+}//End of namespace

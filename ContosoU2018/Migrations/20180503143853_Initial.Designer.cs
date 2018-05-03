@@ -13,9 +13,10 @@ using System;
 namespace ContosoU2018.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20180503143853_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +29,7 @@ namespace ContosoU2018.Migrations
 
                     b.Property<int>("Credits");
 
-                    b.Property<int>("DepartmentID");
+                    b.Property<int?>("DepartmentID");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -178,8 +179,7 @@ namespace ContosoU2018.Migrations
                 {
                     b.HasOne("ContosoU2018.Models.Department", "Department")
                         .WithMany("Courses")
-                        .HasForeignKey("DepartmentID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("DepartmentID");
                 });
 
             modelBuilder.Entity("ContosoU2018.Models.CourseAssignment", b =>

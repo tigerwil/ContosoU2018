@@ -24,6 +24,7 @@ namespace ContosoU2018
                 try
                 {
                     var context = services.GetRequiredService<SchoolContext>();
+                    //Creating a more complex data model - comment out line below
                     DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)

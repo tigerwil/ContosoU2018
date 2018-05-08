@@ -1,0 +1,153 @@
+﻿@*@model IEnumerable<ContosoU2018.Models.Instructor>*@
+@model ContosoU2018.Models.SchoolViewModels.InstructorIndexData
+
+
+@{
+    ViewData["Title"] = "Instructors";
+}
+
+<div class="container my-4">
+    <h2>Instructors</h2>
+    <p>
+        <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
+    </p>
+    <div class="table-responsive">
+        <table id="tablesorted-alt" class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Hire Date
+                    </th>
+                    <th>
+                        Office
+                    </th>
+                    <th>
+                        Courses
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Instructors)
+                {
+                    string selectedRow = "";
+                    if (item.ID == (int?)ViewData["InstructorID"])
+                    {
+                        //we found the selected instructor - now highlight that row
+                        selectedRow = "table-active";
+
+                    }
+                    <tr class="@selectedRow">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HireDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OfficeAssignment.Location)
+                        </td>
+                        <td>
+                            @{
+                                foreach (var course in item.Courses)
+                                {
+                                    @course.Course.CourseID@::&nbsp;&nbsp;@course.Course.Title<br />
+                                }
+                            }
+                        </td>
+                        <td class="ico text-nowrap">
+                            <a class="ico-primary" title="Instructor Courses" asp-action="Index" asp-route-id="@item.ID"><i class="fas fa-list"></i></a>
+                            <a class="ico-info" title="Instructor Details" asp-action="Details" asp-route-id="@item.ID"><i class="fas fa-search-plus"></i></a>
+                            <a class="ico-success" title="Edit Instructor" asp-action="Edit" asp-route-id="@item.ID"><i class="fas fa-edit"></i></a>
+                            <a class="ico-danger" title="Delete Instructor" asp-action="Delete" asp-route-id="@item.ID"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @* Instructor Selected:  show courses that instructor teaches *@
+    @if(Model.Courses !=null){
+
+        @* Show the instructor name *@
+        <h3>Courses taught by: @ViewData["InstructorName"]</h3>
+
+        @* Show the courses in table *@
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Number</th>
+                        <th>Title</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Courses)
+                    {
+                        //row highlighting
+                        string selectedCourse = "";
+                        if (item.CourseID == (int?)ViewData["CourseID"])
+                        {
+                            selectedCourse = "table-danger";//red highlight
+
+                        }
+                        <tr class="@selectedCourse">
+                            <td>
+                                <a title="View Courses" asp-action="Index"
+                                   asp-route-courseID="@item.CourseID"
+                                   class="ico-primary">
+                                    <i class="fas fa-list-ol"></i>
+                                </a> 
+                            </td>
+                            <td>@item.CourseID</td>
+                            <td>@item.Title</td>
+                            <td>@item.Department.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @* Course Selected:  Show enrollment(s) for the selected course *@
+    @if (Model.Enrollments!=null)
+    {
+        string CourseTitle = Model.Enrollments.First().Course.Title;
+        <h2>Students enrolled in: @CourseTitle</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model.Enrollments)
+                    {
+                    <tr>
+                        <td>@item.Student.FullName</td>
+                        <td>@Html.DisplayFor(m=>item.Grade)</td>
+                        @*<td>@item.Grade</td>*@
+                    </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    }
+
+
+</div>

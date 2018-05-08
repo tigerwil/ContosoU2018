@@ -33,7 +33,10 @@
                         @Html.DisplayFor(modelItem => item.FullName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Email)
+                        @*@Html.DisplayFor(modelItem => item.Email)*@
+                        @* To remove the mailto link because of the annotation
+                            on the model we can use this *@
+                        @Html.DisplayTextFor(modelItem=>item.Email)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EnrollmentDate)

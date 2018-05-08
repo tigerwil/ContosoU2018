@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ContosoU2018.Models.Course>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+<div class="container my-4">
+    <h2>Courses</h2>
+
+    <p>
+        <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
+    </p>
+
+    <form asp-action="Index">
+        <div class="form-inline">
+            <div class="form-group mx-sm-2">
+                <label for="SelectedDepartment" class="mr-2">Selected Department:</label>
+                <select id="SelectedDepartment" name="SelectedDepartment"
+                        class="form-control input-sm"
+                        onchange="$(this).closest('form').submit();"
+                        asp-items="ViewBag.SelectedDepartment">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success my-2">
+                <i class="fa fa-filter"></i> Filter
+            </button>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Credits)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Department)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Credits)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.Name)
+                </td>
+                <td class="ico text-nowrap">
+                    <a class="ico-info" title="Course Details" asp-action="Details" asp-route-id="@item.CourseID"><i class="fas fa-search-plus"></i></a>
+                    <a class="ico-success" title="Edit Course" asp-action="Edit" asp-route-id="@item.CourseID"><i class="fas fa-edit"></i></a>
+                    <a class="ico-danger" title="Delete Course" asp-action="Delete" asp-route-id="@item.CourseID"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

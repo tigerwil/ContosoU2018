@@ -8,11 +8,39 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            <li class="nav-item">
+                @{ 
+                    //Get the UserName from currently logged in Identity User
+                    var curUser = UserManager.GetUserName(User);
+                    //for example curUser= "mwilliams@oultoncollege.com"
+
+                    //Find the position of the "@" symbol within curUser
+                    var i = curUser.IndexOf("@");
+
+                    //Create new variable to hold the part in front of @ 
+                    //for example "mwilliams"
+                    var userName = string.Empty;
+
+                    //Just in case UserName and Email are not the same
+                    if (i >= 0)
+                    {
+                        //Extract the username out of email address
+                        userName = curUser.Substring(0, i);
+
+                    }
+                    else
+                    {
+                        //When no "@" symbol was found
+                        userName = curUser;
+
+                    }
+                }
+                <a class="nav-link user" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @userName!</a>
             </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+            <li class="nav-item">
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">
+                    <i class="fas fa-sign-out-alt"></i> Log out
+                </button>
             </li>
         </ul>
     </form>

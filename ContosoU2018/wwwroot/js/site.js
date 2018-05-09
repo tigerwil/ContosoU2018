@@ -16,4 +16,32 @@
         ],
         "paging":false,       
     });
+    /**
+     * Store scroll position for and set it after reload
+     *
+     * @return {boolean} [localStorage is available]
+     */
+    $.fn.scrollPosReload = function () {
+        if (localStorage) {
+            var posReader = localStorage["posStorage"];
+            if (posReader) {
+                //console.log(posReader);
+                //$(window).scrollTop(posReader);
+                $('html, body').animate({ scrollTop: posReader }, 600);
+                localStorage.removeItem("posStorage");
+            }
+            $(this).click(function (e) {
+                //alert('click: ' + $(window).scrollTop());
+                localStorage["posStorage"] = $(window).scrollTop();
+            });
+
+            return true;
+        }
+
+        return false;
+    }
+
+    //Instructors Page
+    $('.scroll').scrollPosReload();
+
 });

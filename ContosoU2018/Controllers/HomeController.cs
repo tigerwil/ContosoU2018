@@ -22,6 +22,12 @@ namespace ContosoU2018.Controllers
             return View();
         }
 
+        public IActionResult Test()
+        {
+ 
+            return View();
+        }
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";

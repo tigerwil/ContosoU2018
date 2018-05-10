@@ -10,23 +10,23 @@
     <div>
         <h4>Course</h4>
         <hr />
-        <dl class="dl-horizontal">
-            <dt>
+        <dl class="row">
+            <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Title)
             </dt>
-            <dd>
+            <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Title)
             </dd>
-            <dt>
+            <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Credits)
             </dt>
-            <dd>
+            <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Credits)
             </dd>
-            <dt>
+            <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Department)
             </dt>
-            <dd>
+            <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Department.Name)
             </dd>
         </dl>

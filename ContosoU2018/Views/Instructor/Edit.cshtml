@@ -63,37 +63,37 @@
                 <div class="row">
                     <h3>Course Assignments</h3>
                     @{
-                            //retrieve the ViewBag courses (from AssignedCourseData object)
-                            var courses = ViewBag.Courses;
-                            //var courses = ViewData["Courses"];
+                        //retrieve the ViewBag courses (from AssignedCourseData object)
+                        var courses = ViewBag.Courses;
+                        //var courses = ViewData["Courses"];
 
-                            int cnt = 0;//start counter variable
+                        int cnt = 0;//start counter variable
 
-                            //Loop the courses
-                            foreach (var course in courses)
+                        //Loop the courses
+                        foreach (var course in courses)
+                        {
+                            //Create 3 columns using modulus operator (%)
+                            //using @: symbol below to indicate start of content
+                            if (cnt++ % 3 == 0)
                             {
-                                //Create 3 columns using modulus operator (%)
-                                //using @: symbol below to indicate start of content
-                                if (cnt++ % 3 == 0)
-                                {
-                                    @:</div>
-                                    @:<div class="row">
-                                }
-                                //Html.Raw  - allows you to print text
-                                        <div class="col-md-3">
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" class="form-check-input"
-                                                       name="selectedCourses"
-                                                       id="@course.CourseID"
-                                                       value="@course.CourseID"
-                                                       @(Html.Raw(course.Assigned ? "checked" : "")) />
-                                                <label class="form-check-label"
-                                                       for="@course.CourseID">
-                                                    @course.Title
-                                                </label>
-                                            </div>
-                                        </div>
+                                @:</div>
+                                @:<div class="row">
                             }
+                            //Html.Raw  - allows you to print text
+                            <div class="col-md-3">
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input"
+                                           name="selectedCourses"
+                                           id="@course.CourseID"
+                                           value="@course.CourseID"
+                                           @(Html.Raw(course.Assigned ? "checked" : "")) />
+                                    <label class="form-check-label"
+                                           for="@course.CourseID">
+                                        @course.Title
+                                    </label>
+                                </div>
+                            </div>
+                        }
                     }
                 </div>
 
@@ -103,11 +103,11 @@
                 </div>
             </form>
         </div>
-    </div>   
-    
-    
-    
+    </div>
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

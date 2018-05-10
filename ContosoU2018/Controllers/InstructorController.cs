@@ -124,6 +124,12 @@ namespace ContosoU2018.Controllers
         // GET: Instructor/Create
         public IActionResult Create()
         {
+            // mwilliams: Updating related data 
+            var instructor = new Instructor();
+            instructor.Courses = new List<CourseAssignment>();
+            //Populate the AssignedCourseData View Model 
+            PopulateAssignedCourseData(instructor);
+            //end mwilliams
             return View();
         }
 
@@ -132,16 +138,43 @@ namespace ContosoU2018.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HireDate,ID,FirstName,LastName,Email,Address,City,PostalCode,Province")] Instructor instructor)
+        //mwilliams:  Updating related data (Include Office Location and Course Assignment)
+        //public async Task<IActionResult> Create([Bind("HireDate,ID,FirstName,LastName,Email,Address,City,PostalCode,Province")] Instructor instructor)
+        public async Task<IActionResult> Create([Bind("HireDate,FirstName,LastName,Email,Address,City,PostalCode,Province,OfficeAssignment")] Instructor instructor, string[] selectedCourses)
         {
+
             if (ModelState.IsValid)
             {
+                //mwilliams removed ID and added OfficeAssignment Bind Arguments 
+                //          added   string[] selectedCourses method argument for many course assignments
+                if (selectedCourses != null)
+                {
+                    //selectedCourses checkboxes have been checked - Create a new list of CourseAssignment
+                    instructor.Courses = new List<CourseAssignment>();
+                    //Loop the selectedCourses array
+                    foreach (var course in selectedCourses)
+                    {
+                        //Populate the CourseAssignment (InstructorID, CourseID)
+                        var courseToAdd = new CourseAssignment
+                        {
+                            InstructorID = instructor.ID,
+                            CourseID = int.Parse(course)
+                        };
+                        instructor.Courses.Add(courseToAdd); //Add the new course to collection
+                    }
+                }
+
+
+                //end mwilliams
+                //Original Scaffolded code
+
                 _context.Add(instructor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(instructor);
         }
+
 
         /* The code in the PopulateAssignedCourseData method reads through all Course entities in order to load 
          * a list of courses using the view model class. For each course, the code checks whether the course 
@@ -259,7 +292,7 @@ namespace ContosoU2018.Controllers
                 }
             }
             //return view with model data
-            return View(instructorToUpdate);        
+            return View(instructorToUpdate);
         }
 
 

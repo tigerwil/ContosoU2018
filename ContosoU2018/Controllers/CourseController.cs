@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ContosoU2018.Data;
 using ContosoU2018.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ContosoU2018.Controllers
 {
+
+   // [Authorize]//any user who's logged in
+   [Authorize(Roles ="admin")]//only logged in users assigned to the admin role
     public class CourseController : Controller
     {
         private readonly SchoolContext _context;

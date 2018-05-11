@@ -23,9 +23,24 @@ namespace ContosoU2018
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<SchoolContext>();
+                    //var context = services.GetRequiredService<SchoolContext>();
                     //Creating a more complex data model - comment out line below
-                    DbInitializer.Initialize(context);
+                    //This DbInitializer is for the School Data
+                    //DbInitializer.Initialize(context);
+
+                    //mwilliams:  Identity Framework - initial seed
+                    //Note:  using the Secrets Manager tool for initial pwd
+                    //       will need a reference to the Microsoft.Extensions.Configuration
+                    //This DbInitializer is for user and roles within the Identity Framework
+                    var config = host.Services.GetRequiredService<IConfiguration>();
+
+                    var testUserPw = config["SeedUserPW"];//this is the password
+
+                    //Call our Initializer
+                    IdentityDbInitializer.Initialize(services, testUserPw).Wait();
+                    
+
+
                 }
                 catch (Exception ex)
                 {
